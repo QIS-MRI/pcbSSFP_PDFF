@@ -28,11 +28,15 @@ Hernando, D., Kellman, P., Haldar, J. P., & Liang, Z. P. (2010). Robust water/fa
 
 
 ## Usage
-Load your 2D phase-cycled bSSFP profiles to the MATLAB workspace and run the main script
-
 Graph-cuts implementation can be found in the toolbox from ISMRM workshop on fat-water separation:
 
 https://www.ismrm.org/workshops/FatWater12/data.htm
+
+Phase-cycled bSSFP PDFF also depends on the graph-cut implementation in the toolbox. Download the toolbox from the given link and add it to your path.
+
+Load your 2D phase-cycled bSSFP profiles to the MATLAB workspace and run the main script
+
+
 
 
 ## License
