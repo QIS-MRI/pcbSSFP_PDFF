@@ -30,6 +30,10 @@ Hernando, D., Kellman, P., Haldar, J. P., & Liang, Z. P. (2010). Robust water/fa
 ## Usage
 Load your 2D phase-cycled bSSFP profiles to the MATLAB workspace and run the main script
 
+Graph-cuts implementation can be found in the toolbox from ISMRM workshop on fat-water separation:
+
+https://www.ismrm.org/workshops/FatWater12/data.htm
+
 
 ## License
 This project is released under the **MIT License**. See [LICENSE](LICENSE) for details.
