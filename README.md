@@ -1,49 +1,70 @@
-# Robust Fat Fraction Mapping with Phase-Cycled bSSFP
+# Phase-cycled bSSFP PDFF mapping
 
-## Overview
-This repository contains the code accompanying the publication:
+MATLAB code for **proton-density fat fraction (PDFF)** mapping from **phase-cycled balanced SSFP**, with **ΔB0 estimation** so that fat–water swaps from field inhomogeneity can be corrected before SPARCQ reconstruction.
 
-**"Robust fat fraction mapping in the presence of magnetic field inhomogeneities with phase-cycled bSSFP"**  
-by **Berk Can Acikgoz**  
+The method is described in:
 
-This code provides implementations for fat fraction (FF) mapping using phase-cycled balanced steady-state free precession (bSSFP) while addressing magnetic field inhomogeneities. It includes functions for data processing, reconstruction, and analysis.
+> Acikgoz BC, Mackowiak ALC, Bongiolatti-Rossi GMC, et al. *Fat fraction mapping in the presence of magnetic field inhomogeneities with phase-cycled bSSFP at 3T.*
 
-## Citation
-1) If you use this code in your research, please cite our paper:
+Typical acquisition (as in the manuscript): TR/TE ≈ 3.4/1.7 ms, FA 35°, 3T, complex profiles `[x y nPC]`.
 
-> TO BE DETERMINED¨
+## Pipeline
 
-2) Also, please cite the water-fat seperation workshop:
+1. Phase-correct the measured profiles (remove coil / eddy / systematic phase).
+2. Fit residuals over a discretized ΔB0 range, then pick a spatially smooth field map with **graph cuts**.
+3. Correct profiles for ΔB0 (Fourier circular shift + accumulated phase).
+4. Identify very low / very high PDFF with a phase lookup table.
+5. Run **SPARCQ** dictionary matching on the remaining voxels.
 
-Hu HH, Börnert P, Hernando D, Kellman P, Ma J, Reeder S, Sirlin C. ISMRM workshop on fat-water separation: insights, applications and progress in MRI. Magn Reson Med. 2012 Aug;68(2):378-88. doi: 10.1002/mrm.24369. Epub 2012 Jun 12. PMID: 22693111; PMCID: PMC3575097.
+## How to run
 
-3) The pioneer work (SPARCQ) on PDFF with phase-cycled bSSFP:
+MATLAB R2023b or later. Toolboxes: Optimization (`lsqnonneg`, `lsqlin`), Image Processing (`imresize`, `bwareaopen`), Parallel Computing (`parfor`).
 
-Rossi, G. M., Mackowiak, A. L., Açikgöz, B. C., Pierzchała, K., Kober, T., Hilbert, T., & Bastiaansen, J. A. (2023). SPARCQ: a new approach for fat fraction mapping using asymmetries in the phase‐cycled balanced SSFP signal profile. Magnetic resonance in medicine, 90(6), 2348-2361.
+**One-time:** copy a working `max_flow_mex` (Windows: `max_flow_mex.mexw64`) into
 
-4) The pioneer work on inhomogeneity field mapping with graph-cuts:
+```
+third_party/matlab_bgl/private/
+```
 
-Hernando, D., Kellman, P., Haldar, J. P., & Liang, Z. P. (2010). Robust water/fat separation in the presence of large field inhomogeneities using a graph cut algorithm. Magnetic Resonance in Medicine: An Official Journal of the International Society for Magnetic Resonance in Medicine, 63(1), 79-90.
+Do not add that `private` folder to the MATLAB path.
 
+1. Put a `.mat` with complex `profiles` `[x y nPC]` into `example data/`.
+2. Edit **USER SETTINGS** in `prepare_data.m` (filename, `type` = `Liver` | `Knee` | `Calimetrix` | `Butters`, TR, FA, …) and run it. This writes a `dataset` struct.
+3. Set `prepared_name` in `run_sparcq.m` to that filename and run it.
+4. Draw a background mask (slider + **Continue**).
+5. Optional: in `run_sparcq.m`, set `plot_vials = true` to click phantom vials against the commercial (Calimetrix) or custom (Butters) ground-truth lists.
 
+Prepared `dataset` structs and optional `*_results.mat` stay in `example data/`. Sample commercial-phantom data (shim settings and RF excitation angle) are included there. Code: https://github.com/QIS-MRI/pcbSSFP_PDFF
 
-## Usage
-Graph-cuts implementation can be found in the toolbox from ISMRM workshop on fat-water separation:
+```
+prepare_data.m          pack scan + algorithm parameters
+run_sparcq.m            mask GUI + reconstruction + figures
+lib/                    SPARCQ pipeline
+third_party/hernando/   graph-cut (Hernando)
+third_party/matlab_bgl/ max_flow (paste MEX in private/)
+example data/           input and output .mat files
+```
 
-https://www.ismrm.org/workshops/FatWater12/data.htm
+## Citations
 
-Phase-cycled bSSFP PDFF also depends on the graph-cut implementation in the toolbox. Download the toolbox from the given link and add it to your path.
+If you use this code, please cite the SPARCQ PDFF papers and, kindly, the graph-cut method and the ISMRM Fat-Water Toolbox that this reconstruction relies on (as in the manuscript, refs 10 and 28):
 
-Load your 2D phase-cycled bSSFP profiles to the MATLAB workspace and run the main script
+**Graph-cut field mapping**
 
+Hernando D, Kellman P, Haldar JP, Liang ZP. Robust water/fat separation in the presence of large field inhomogeneities using a graph cut algorithm. *Magn Reson Med.* 2010;63(1):79-90. doi:10.1002/mrm.22177 [PMID: 19859956](https://pubmed.ncbi.nlm.nih.gov/19859956/)
 
+**ISMRM Fat-Water Separation Toolbox**
 
+Hu HH, Börnert P, Hernando D, Kellman P, Ma J, Reeder S, Sirlin C. ISMRM workshop on fat-water separation: Insights, applications and progress in MRI. *Magn Reson Med.* 2012;68(2):378-388. doi:10.1002/mrm.24369
+
+Toolbox: <https://www.ismrm.org/workshops/FatWater12/data.htm>
+
+**SPARCQ**
+
+Rossi GMC, Mackowiak ALC, Açikgöz BC, Pierzchała K, Kober T, Hilbert T, Bastiaansen JAM. SPARCQ: A new approach for fat fraction mapping using asymmetries in the phase-cycled balanced SSFP signal profile. *Magn Reson Med.* 2023;90(6):2348-2361. doi:10.1002/mrm.29813
+
+Please also cite the manuscript above when using this ΔB0-corrected implementation.
 
 ## License
-This project is released under the **MIT License**. See [LICENSE](LICENSE) for details.
 
-## Disclaimer
-This code is provided **as is**, without any warranty or guarantee of accuracy. It is intended for academic and research purposes only. The author and affiliated institutions assume no responsibility for any issues arising from its use.
-
-## Contact
-For questions or issues, please open an issue on GitHub or contact Berk Can Acikgoz at **[acikgozbc@gmail.com]**.
+Academic, non-commercial research only. The bundled graph-cut code is Diego Hernando / University of Wisconsin academic software; see `LICENSE`.

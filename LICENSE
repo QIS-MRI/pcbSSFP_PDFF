@@ -1,21 +1,57 @@
-MIT License
+Academic, non-commercial research license
+========================================
 
-Copyright (c) 2025 QIS-MRI
+Copyright (c) 2026 Berk Can Acikgoz and collaborators
+Department of Diagnostic, Interventional and Pediatric Radiology (DIPR),
+Inselspital, Bern University Hospital, University of Bern
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This repository provides MATLAB code for proton-density fat fraction (PDFF)
+mapping from phase-cycled bSSFP, including ΔB0 estimation with graph cuts
+and SPARCQ dictionary matching.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Permission is granted, free of charge, to use, copy, and modify this software
+for academic, non-commercial research only. Redistribution of the software
+(including modifications) must retain this license and the third-party notices
+below. Commercial use, sale, lease, rental, fee-for-service, or sublicensing
+of this package is not permitted.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM USE
+OF THE SOFTWARE.
+
+
+Graph-cut code (Diego Hernando / University of Wisconsin)
+---------------------------------------------------------
+
+This repository includes graph-cut fat–water imaging code created at the
+University of Wisconsin by Diego Hernando. That code is licensed to academic
+researchers under the University of Wisconsin Academic Software End User
+License Agreement for fat-water imaging software. The original agreement is
+not redistributed with this repository.
+
+In summary, that agreement grants a non-commercial, non-transferable,
+royalty-free, non-exclusive license, with no right to sublicense, for
+academic research only. Recipients may create modifications for their own
+academic, non-commercial research; modifications may not be transferred
+without the Provider's written consent. The software may not be sold, leased,
+rented, or used commercially (including fee-for-service). Publications that
+use the software must acknowledge that use. The Provider retains all
+intellectual property; the software is provided AS IS, without warranty, and
+liability is limited as stated in the original agreement.
+
+Use of this repository requires compliance with those terms for the bundled
+graph-cut code. For a commercial license or other permissions, contact the
+University of Wisconsin / Wisconsin Alumni Research Foundation (WARF).
+
+Please cite the graph-cut method and the ISMRM Fat-Water Toolbox as described
+in README.md.
+
+
+matlab_bgl
+----------
+
+The min-cut/max-flow solver used by the graph-cut code is matlab_bgl
+(Copyright David Gleich / Stanford University), which includes compiled
+object code from the Boost Graph Library (Boost Software License 1.0).

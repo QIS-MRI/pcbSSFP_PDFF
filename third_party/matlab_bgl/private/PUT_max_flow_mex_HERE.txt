@@ -1,0 +1,7 @@
+Paste your working max_flow_mex here (same file you always copy).
+On Windows 64-bit MATLAB the file is typically:
+
+  max_flow_mex.mexw64
+
+This folder is matlab_bgl/private, which is where max_flow.m looks for the MEX.
+Do not add this private folder to the MATLAB path yourself.

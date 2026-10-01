@@ -1,0 +1,23 @@
+# Unpublished manuscript and original UW/Hernando license agreement
+Main manuscript.docx
+PDFF_SPARCQ*.docx
+License - Software_Academic*.doc
+*.pdf
+
+# MATLAB editor backups and compiled MEX
+*.asv
+*.mexw64
+*.mexa64
+*.mexmaci64
+*.mexmaca64
+
+# Prepared user outputs and non-public data
+example data/*_results.mat
+example data/Liver_patients*.mat
+!example data/.gitkeep
+
+# OS
+.DS_Store
+._*
+Thumbs.db
+desktop.ini
