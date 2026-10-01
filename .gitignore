@@ -11,9 +11,8 @@ License - Software_Academic*.doc
 *.mexmaci64
 *.mexmaca64
 
-# Prepared user outputs and non-public data
+# Prepared reconstruction outputs
 example data/*_results.mat
-example data/Liver_patients*.mat
 !example data/.gitkeep
 
 # OS
